@@ -23,12 +23,10 @@ class _HomePageState extends State<HomePage> {
         loading = true;
       });
       final response = await controller.getCharacters();
-      print(response.length);
       setState(() {
         characters.addAll(response);
         loading = false;
       });
-      print(characters.length);
     });
   }
 
@@ -42,14 +40,35 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Disney API'),
+        title: const Text(
+          'Disney API',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: Colors.deepPurple,
+        // centerTitle: true,
+        leadingWidth: 100,
+        leading: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8),
+          child: Image.network(
+              'https://logodownload.org/wp-content/uploads/2020/11/disney-plus-logo-1.png'),
+        ),
       ),
       body: loading
           ? const Center(
               child: CircularProgressIndicator(),
             )
           : SingleChildScrollView(
-              child: SizedBox(
+              child: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Color.fromARGB(255, 2, 86, 212),
+                      Color.fromARGB(255, 75, 0, 214),
+                    ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
+                ),
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
                 child: characters.isEmpty
@@ -68,7 +87,6 @@ class _HomePageState extends State<HomePage> {
                             ),
                             color: const Color.fromARGB(255, 0, 33, 82),
                             child: Column(
-                              // mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 FadeInImage(
                                     fit: BoxFit.cover,
